@@ -1,0 +1,43 @@
+---
+name: SearchForm
+menu: 组件
+---
+
+import { Playground, Props } from 'docz'
+import { LayoutSF } from './SearchForm'
+import { Button } from 'antd'
+import SearchForm from '@/search-form'
+
+# SearchForm 自适应搜索表单
+
+## Props
+
+<Props of={SearchForm} />
+
+## 基本使用
+<Playground>
+  <LayoutSF title="基本使用，可更改按钮位置" />
+</Playground>
+
+## 紧凑模式，不使用响应式栅格的布局模式
+<LayoutSF
+  title="紧凑模式，不使用响应式栅格的布局模式"
+  searchFormProps={{ disabledGrid: true }}
+/>
+
+## 自定义按钮
+<LayoutSF
+  title="自定义按钮、统一设置Form.Item"
+  searchFormProps={{
+     disabledGrid: true,
+     itemsProps: { colon: false, hasFeedback: true, required: true },
+     btnRender: (form) => (
+      <Button
+        type="danger"
+        onClick={() => form.validateFields((err, val) => console.log(err, val))}
+      >
+        提交
+      </Button>
+     )
+  }}
+/>

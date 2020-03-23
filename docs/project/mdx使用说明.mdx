@@ -1,0 +1,86 @@
+---
+name: Getting Started
+menu: Getting Started
+menuorder: 2
+route: /
+---
+
+# Welcome to @wyny/metro 👋
+![Version](https://img.shields.io/npm/v/@wyny/metro.svg)
+[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](http://172.16.11.85:35069)
+
+> Composite components for wyny-fe based on antd
+
+### 🏠 [Homepage](http://172.16.11.30:3001/front-end/metro)
+
+## 📟 Install
+
+```sh
+yarn add @wyny/metro -D 
+```
+
+## 🛠 Usage
+
+因为 metro 的 antd 为 peerDependences，确保你在项目中已经安装了 antd
+
+```js
+    import { SearchForm } from '@wyny/metro';
+
+    function Component(props) {
+        const items = [{  
+            id: 'name',
+            label: 'username'
+        }];
+        return <div>
+            <SearchForm items={items}/>
+        </div>;
+    }
+
+    ReactDOM.render(<Component />, mountNode);
+```
+
+## 👤 Author
+
+ **wyny-fe**
+
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check [issues page](http://172.16.11.30:3001/front-end/metro/issues).
+
+### 
+```sh
+    ├── LICENSE
+    ├── README.md
+    ├── docs
+    │   ├── components
+    │   ├── development
+    │   ├── others
+    │   └── project
+    ├── docz
+    │   ├── docz.config.js
+    │   ├── index.html
+    │   ├── public
+    │   └── theme
+    ├── jest.config.js
+    ├── package.json
+    ├── src
+    │   ├── _utils
+    │   ├── auto-form-item
+    │   ├── editable
+    │   ├── img-upload
+    │   ├── index.ts
+    │   ├── modal-form
+    │   ├── search-form
+    │   ├── search-tree
+    │   ├── standard-table
+    │   └── year-picker
+    ├── tests
+    │   └── setup.js
+    ├── tsconfig.json
+    ├── typing.d.ts
+    ├── yarn-error.log
+    └── yarn.lock
+```

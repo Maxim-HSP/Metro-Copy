@@ -1,0 +1,43 @@
+{
+  "name": "@wyny/metro",
+  "version": "0.1.22",
+  "description": "Composite components for wyny-fe based on antd",
+  "files": [
+    "lib",
+    "es"
+  ],
+  "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "start": "father doc dev",
+    "build": "cross-env CSS=true father build",
+    "build:tsc": "tsc -m commonjs --outDir ./lib &&  tsc -m es6 --outDir ./es",
+    "build:doc": "father doc build",
+    "gen": "plop --plopfile ./utils/generators/index.js",
+    "test": "father test",
+    "prepublishOnly": "np --no-cleanup --yolo --no-publish",
+    "pub": "npm run build && npm publish --access=public"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "antd": "^3.19.8",
+    "immer": "^3.1.3",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@babel/helper-create-regexp-features-plugin": "^7.7.4",
+    "@babel/runtime": "^7.5.5",
+    "@types/lodash": "^4.14.133",
+    "babel-plugin-import": "^1.12.0",
+    "cross-env": "^5.2.0",
+    "docz": "^1.2.0",
+    "father": "^2.13.5",
+    "np": "^5.0.3",
+    "plop": "2.2.0",
+    "raw-loader": "^3.1.0",
+    "rc-switch": "^1.9.0",
+    "react": "^16.8.6"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,33 @@
+---
+name: Maintenance
+menu: 组件
+---
+
+import { Playground } from 'docz';
+
+import Maintenance from '@/maintenance';
+
+import dataImg from './data.png'
+
+# Maintenance 系统维护中
+
+## 使用
+
+Maintenance 的宽高已经设为 100% ，会自动撑满可用空间。
+
+当系统在维护中时，API网关返回的数据中 `code` 是 `3001` ，前端可以拦截 http 请求对这个状态码进行处理即可。
+
+<img src={dataImg} style={{width: '100%', maxWidth: 600}} />
+
+```js
+<div style={{height: 500, width: 700}}>
+  <Maintenance title='xxx系统维护中...' />
+</div>
+```
+
+<Playgournd>
+  <div style={{height: 500, width: 700}}>
+    <Maintenance title='xxx系统维护中...' />
+  </div>
+</Playgournd>
+

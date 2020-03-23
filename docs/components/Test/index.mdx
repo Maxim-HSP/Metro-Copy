@@ -1,0 +1,73 @@
+---
+name: Test
+menu: Test
+menuorder: 1
+# fullpage: true
+source: http://127.0.0.1:8080/docs-components-test
+# route: /Test-route
+---
+
+import { Playground, Props } from 'docz'
+import { AButton } from './Test'
+import { PureYearPicker } from '@/year-picker'
+import Cell from '@/editable/Cell'
+
+# Test
+
+## Props
+
+<Props of={AButton} />
+
+<Props of={PureYearPicker} />
+
+<Props of={Cell} />
+
+## 基本使用
+<Playground>
+  {
+    () => {
+      return <AButton text="sad" />
+    }
+  }
+</Playground>
+
+# Accessiblity
+
+Smooth UI takes accessibility seriously. We do our best to ensure that all components are the most accessible for everyone and on all devices.
+
+## Reduce motion preference
+
+All components implement [reduced motion media query](https://css-tricks.com/introduction-reduced-motion-media-query/), it means they respect settings of users.
+
+`transition` utility automatically adds the reduced motion media query.
+
+```js
+import { transition } from '@smooth-ui/core-sc'
+
+const AccessibleButton = styled.button`
+  background-color: red;
+  ${transition('background-color 200ms')};
+
+  &:hover {
+    background-color: blue;
+  }
+`
+
+/* 
+  CSS injected in the page will be:
+
+  background-color: red;
+  transition: background-color 200ms;
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &:hover {
+    background-color: blue;
+  }
+*/
+```
+
+## Turn off all transitions
+
+You can also choose to turn off all transitions by setting `transitionEnabled` to `false` in theme. See [theming guide](/docs-basics-theming).

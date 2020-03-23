@@ -1,0 +1,92 @@
+---
+name: Editable
+menu: 组件
+---
+
+import BaseUse from './example/BaseUse';
+import WithSubmit from './example/WithSubmit';
+import WithCellChange from './example/WithCellChange';
+import UseSelect from './example/UseSelect';
+import RuleUse from './example/RuleUse';
+import PageUse from './example/PageUse';
+import RefUse from './example/RefUse';
+import { Playground, Props } from 'docz';
+import Editable from '@/editable';
+import Cell from '@/editable/Cell';
+
+
+## Props
+
+### Editable
+Editable 继承了 antd Table 的属性， 一切关于 antd Table 的属性都会通过 Editable 透传给它， 这里只单独列出 Editable 的属性
+
+[antd Table 属性列表传送门](https://ant.design/components/table-cn/#API)
+
+| 参数 | 说明 | 类型 | 默认值 |
+|:------------:|:-----------------------------------------------------------:|:----------------------------------------------------------:|-------:|
+| onCellChange | 单元格更新回调 | (nextSource: T[], curValue: any, beforeValue: any, rowIndex: number, dataIndex:string) => void | - |
+| onSubmit | 保存按钮回调，如传入此属性，则会在表格下方多出一个button | (nextSource: T[]) => void | - |
+| btnProps | 保存按钮的props, 与onSubmit联用, 可用 text 属性设置按钮文字 | { text?: string } & ButtonProps | - |
+
+### columns
+
+| 参数 | 说明 | 类型 | 默认值 |
+|:--------:|:-------------------------------------------------------------------------------------------------:|:----------------:|-------:|
+| editable | 列的是否可编辑 | boolean | true |
+| rule | 列数据的校验规则, 同antd Form | ValidationRule[] | [] |
+| isSelect | 是否启动Select作为单元格控件 | boolean | Array; | false |
+
+### dataSource
+
+| 参数 | 说明 | 类型 | 默认值 |
+|:--------:|:-------------------------------------------------------------------------------------------------:|:----------------:|-------:|
+| editable | 行的是否可编辑,支持单元格禁用 | boolean or {disabled:string[]} | true |
+
+## 基本使用 
+
+<Playground >
+    <BaseUse url={'Editable/example/BaseUse'}/>
+</Playground>
+
+## 带保存按钮
+
+给 Editable 添加 `onSubmit` 属性会在组件下方添加一个保存按钮， 点击可以获取当前的 dataSource 
+
+<Playground>
+    <WithSubmit url={'Editable/example/WithSubmit'}/>
+</Playground>
+
+## Cell监听
+
+`onCellChange` 可以实时获取最新的 dataSource 
+
+<Playground>
+    <WithCellChange url={'Editable/example/WithCellChange'}/>
+</Playground>
+
+## Select 控件
+
+在 columns 中加入 `isSelect` 字段用来控制是否启用 Select 控件， 它的值需要是一个数组， 用来提供select下拉框的选项渲染数据， 也可以单纯是一个boolean值。 
+
+<Playground>
+    <UseSelect url={'Editable/example/UseSelect'}/>
+</Playground>
+
+## Rules 单元格校验
+
+<Playground>
+    <RuleUse url={'Editable/example/RuleUse'}/>
+</Playground>
+
+## 内嵌 StandardTable
+
+Editable 内嵌了 StandardTable， 所以 StandardTable 支持的功能， Editable同样也支持， 包括分页， 行选择， 表头的alert 等
+<Playground>
+    <PageUse url={'Editable/example/PageUse'}/>
+</Playground>
+
+## Ref
+
+<Playground>
+    <RefUse url={'Editable/example/RefUse'}/>
+</Playground>

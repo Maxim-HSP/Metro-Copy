@@ -1,0 +1,7 @@
+- [x] 去 css Module
+- [x] 新组件的模版代码
+- [x] 脱离 babel-plugin-import 的样式自动引入
+- [ ] 文档补全
+- [ ] 添加全量的 css 文件
+- [ ] 按约定修改类名 (metro-search-form)
+- [ ] 业务主项目脱离 less-loader 使用 metro

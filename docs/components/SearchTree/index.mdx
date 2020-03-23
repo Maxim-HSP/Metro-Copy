@@ -1,0 +1,35 @@
+---
+name: SearchTree
+menu: 组件
+---
+import { Playground, Props } from 'docz';
+import { BaseUse, CustomStyle, CustomTreeNode } from './SearchTree';
+import SearchTree from '@/search-tree';
+import { PureYearPicker } from '@/year-picker';
+
+# SearchTree搜索树
+
+## Props
+
+<Props of={SearchTree} />
+
+## 基本使用
+基本使用，展示可搜索，可选中，默认展开等功能。
+
+<Playgournd>
+  <BaseUse/>
+</Playgournd>
+
+## wrapperClassName
+通过 wrapperClassName 控制组件样式。
+
+<Playgournd>
+  <CustomStyle/>
+</Playgournd>
+
+## SetTreeNodeProps
+通过 SetTreeNodeProps 给 treeNode 添加自定义属性。（因搜索使用了 treeNode.style.display，为了不影响搜索功能，不提供该属性的覆盖。）
+
+<Playgournd>
+  <CustomTreeNode/>
+</Playgournd>

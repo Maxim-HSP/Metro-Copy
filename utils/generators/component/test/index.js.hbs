@@ -1,0 +1,17 @@
+import React from 'react';
+import { mount } from 'enzyme';
+import {{ properCase name }} from '..';
+
+
+describe('{{ properCase name }}',() => {
+  let wrapper;
+
+  beforeAll(() => {
+    wrapper = mount(<{{ properCase name }} />);
+  })
+
+  it('render correctly', () => {
+    expect(wrapper.render()).toMatchSnapshot();
+    // expect(wrapper.find('.ant-calendar-picker').length).toBe(1);
+  });
+});
