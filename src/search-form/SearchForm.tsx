@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useImperativeHandle, RefObject } from 'react';
 import { Form, Input, Row, Col, Button, Divider } from 'antd';
 
 // interface
@@ -27,6 +27,8 @@ export interface ISearchFromProps extends Omit<IAutoFormProps, 'form'> {
    * @default info
    */
   options?: FormCreateOption<any>;
+  /* 表单ref，暴露对象：{ form } */
+  searchRef?: RefObject<any>;
 }
 export interface IAutoFormProps
   extends Omit<FormProps & ILayoutProps, 'handleReset' | 'btnElement'> {
@@ -42,6 +44,8 @@ export interface IAutoFormProps
   onSearch?: ValidateCallback<object>;
   /** 自定义按钮render，接收form为参数 */
   btnRender?: ((form?: any) => JSX.Element) | JSX.Element;
+  /* 表单ref，暴露对象：{ form } */
+  searchRef?: RefObject<any>;
   /** form */
   form?: any;
 }
@@ -96,6 +100,8 @@ const AutoForm: React.FC<IAutoFormProps> = props => {
     btnLoading,
     btnPosition,
     btnRender,
+    // ref
+    searchRef,
     // 传递 Form props
     ...formProps
   } = props;
@@ -106,7 +112,10 @@ const AutoForm: React.FC<IAutoFormProps> = props => {
   const btnElement = typeof btnRender === 'function' ? btnRender(form) : btnRender;
   // 使用按钮靠右布局时，改变表单布局为右对齐
   const sizeCol = btnPosition === 'followRight' ? rightSizeCol : defaultSizeCol;
-
+  // ref registry
+  useImperativeHandle(searchRef, () => ({
+    form,
+  }));
   // 提交
   const submit = e => {
     e.preventDefault();

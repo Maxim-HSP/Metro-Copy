@@ -12,8 +12,8 @@ const dataSource = [
   {
     key: '2',
     name: '胡彦祖',
-    age: -1,
-    address: '西湖区湖底公园1号',
+    // age: -1,
+    // address: '西湖区湖底公园1号',
     editable: {
       disabled: ['name'],
     },
@@ -50,11 +50,12 @@ const columns = [
     dataIndex: 'address',
     key: 'address',
     width: '40%',
+    rules: [{ required: true, message: '请填写住址' }]
   },
 ];
 
 const RuleUse = () => {
-  return <Editable dataSource={dataSource} columns={columns} rowKey="key" />;
+  return <Editable dataSource={dataSource} columns={columns} rowKey="key" onSubmit={(val, form) => { form.validateFields() }} />;
 };
 
 export default RuleUse;

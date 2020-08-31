@@ -15,3 +15,5 @@ export { default as ImgUpload } from './img-upload';
 export { default as searchTree } from './search-tree';
 
 export { default as Maintenance } from './maintenance';
+
+export { default as Exception } from './exception';

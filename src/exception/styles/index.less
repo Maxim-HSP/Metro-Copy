@@ -1,0 +1,110 @@
+.flexBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* -------------------无权限页 NoAuth----------- */
+.metro-noauth-wrapper {
+  .flexBox;
+  overflow: auto;
+  height: 100%;
+  font-family: PingFangSC-Regular, PingFang SC;
+  background: rgba(246, 247, 248, 1);
+
+  & > p {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 20px;
+  }
+  & > p:nth-child(3) {
+    color: #000;
+    font-size: 30px;
+    margin: 8px 0 16px 0;
+  }
+  a {
+    color: #1890ff;
+    text-decoration: underline;
+    margin-left: 8px;
+  }
+}
+.metro-noauth-descWrap {
+  background: #fff;
+}
+
+.metro-noauth-lock {
+  height: 46px;
+  width: 46px;
+  margin-bottom: 24px;
+}
+
+.metro-noauth-descWrap {
+  .flexBox;
+  height: 402px;
+  width: 820px;
+  margin-top: 72px;
+  background-color: #fff;
+  & > p {
+    margin: 0;
+  }
+  & > p:nth-child(2) {
+    font-size: 20px;
+    margin-top: 30px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: Medium;
+  }
+  & > p:nth-child(3) {
+    width: 652px;
+    margin: 7px 79px 42px 89px;
+    font-size: 16px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.45);
+  }
+}
+
+.metro-noauth-image {
+  height: 202px;
+  width: 272px;
+  margin-top: 45px;
+}
+
+/* ------------------- 账户禁用页 Disabled ----------- */
+.metro-disabled-wrapper {
+  background: rgba(246, 247, 248, 1);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.metro-disabled-image {
+  width: 438px;
+  height: 258px;
+}
+.metro-disabled-desc {
+  margin-left: 120px;
+  & > p:nth-child(1) {
+    height: 28px;
+    font-size: 20px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 28px;
+  }
+  & > p:nth-child(2) {
+    height: 28px;
+    font-size: 30px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 1);
+    line-height: 38px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1120px) {
+  .metro-disabled-wrapper {
+    flex-direction: column;
+  }
+  .metro-disabled-desc {
+    margin-top: 30px;
+  }
+}

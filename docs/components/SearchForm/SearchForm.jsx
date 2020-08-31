@@ -1,22 +1,23 @@
-import React, { useState } from 'react'
-import SearchForm from '@/search-form'
-import { Card, DatePicker, Radio } from 'antd'
+import React, { useState, useRef } from 'react';
+import SearchForm from '@/search-form';
+import { Card, DatePicker, Radio } from 'antd';
 
 const items = [];
 for (let i = 0; i < 5; i++) {
   items.push({
     id: `field${i}`,
-    label: `Field ${i}`
-  })
+    label: `Field ${i}`,
+  });
 }
 items.push({
   id: 'date',
   label: 'Field date',
-  render: form => <DatePicker />
-})
+  render: form => <DatePicker />,
+});
 
-export const LayoutSF = ({ title, searchFormProps }) => {
-  const [btnPosition, setBtnP] = useState('rightTop')
+const LayoutSF = ({ title, searchFormProps }) => {
+  const searchRef = useRef();
+  const [btnPosition, setBtnP] = useState('rightTop');
   return (
     <Card title={title}>
       btnPosition:{' '}
@@ -31,10 +32,13 @@ export const LayoutSF = ({ title, searchFormProps }) => {
       </Radio.Group>
       <SearchForm
         items={items}
+        searchRef={searchRef}
         btnPosition={btnPosition}
         onSearch={(err, val) => console.log('formResults:', err, val)}
         {...searchFormProps}
       />
     </Card>
-  )
-}
+  );
+};
+
+export default LayoutSF;

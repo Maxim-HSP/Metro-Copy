@@ -1,0 +1,50 @@
+---
+name: Exception
+menu: 组件
+---
+
+import { Playground, Props } from 'docz'
+import { Button } from 'antd'
+import { NoAuth, Disable } from '@/exception/index';
+import noAuthPNG from '@/exception/images/noAuth.png';
+
+# Exception 异常页面
+包含 `NoAuth`, `Disable` 组件
+```js
+import { Exception } from '@wyny/metro';
+...
+const { NoAuth, Disable } = Exception;
+```
+
+## NoAuth 无权限页面
+### Props
+
+| 参数 | 说明 | 类型 | 默认值 |
+|:--------:|:--------------:|:----------------:|-------:|
+| handleLogout | 重定向方法，如果为null则不显示“重新登录” | null / function | null |
+| systemDesc | 系统描述信息，{imgModule: 图片, name: 系统名称, desc: 系统描述} | object | {imgModule: noAuthPNG, name:'数字化能源管理平台', desc:"通过对电力用户用能数据采集..."} |
+
+> imgModule：通过import导入的对象
+
+### 基本用法
+<Playground >
+  <div style={{height: 700}}>
+    <NoAuth
+      handleLogout={() => null}
+      systemDesc={{
+        imgModule: noAuthPNG,
+        name:'数字化能源管理平台',
+        desc:"通过对电力用户用能数据采集，帮助用户实现用能精细化管理，发现用能异常，优化用能结构，提升管理效率，助力企业实现数字化转型。"
+      }}
+    />
+  </div>
+</Playground>
+
+## Disable 账户禁用页面
+
+### 基本用法
+<Playground>
+  <div style={{height: 500}}>
+    <Disable />
+  </div>
+</Playground>

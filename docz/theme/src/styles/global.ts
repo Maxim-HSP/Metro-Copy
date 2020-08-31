@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import { get } from '~utils/theme'
+import { createGlobalStyle } from 'styled-components';
+import { get } from '~utils/theme';
 
 export const Global = createGlobalStyle`
 
@@ -23,4 +23,8 @@ export const Global = createGlobalStyle`
     height: 100%;
     min-height: 100%;
   }
-`
+
+  .react-live-preview {
+    height: 100%;
+  }
+`;

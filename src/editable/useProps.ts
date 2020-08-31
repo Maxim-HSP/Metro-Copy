@@ -4,42 +4,32 @@ import produce from 'immer';
 import useTabChange from './useTabChange';
 import computedEditColumns from './computedEditColumns';
 import { CellType } from './Cell';
-import { EditableColumn } from './Editable';
+import { EditableColumn, OnCellChange } from './Editable';
 
 const useProps = <T extends object>(
   dataSource: T[],
   columns: Array<EditableColumn<T>>,
-  onCellChange: (
-    nextSource: T[],
-    curValue: any,
-    beforeValue: any,
-    rowIndex: number,
-    dataIndex: string,
-  ) => void,
+  onCellChange: OnCellChange<T>,
   form: any,
 ) => {
+
   // 当前被激活的单元格，默认为null
   const [curCell, setCurCell] = useState<CellType>(null);
+  // 更新 curCell 的唯一通道，统一在此校验 curCell 对应的表单域
+  function handleSetCurCell(nextCell: CellType, cb?: () => void) {
+    // 当前单元格无错误才能更新
+    const curField = curCell && `${curCell!.dataIndex}-${curCell!.rowIndex}`
+    form.validateFields([curField], (err: object) => {
+      if(!err) setCurCell(nextCell);
+      if(cb) cb()
+    })
+  }
 
-  // 内部维护的 dataSource
+  // 缓存dataSource 为 cacheSource，以供内部维护
   const { cacheSource, setCacheSource } = useDataSource(dataSource, form);
-
   // 用 ref 记录每次被更新的单元格
   const beforeCell = useRef<CellType>(null);
-
-  // 使用 useMemo 缓存 editColumns 和 dataIndexMap。 只在 columns 和 curCell 更改后更新
-  const { editColumns, dataIndexMap } = useMemo(
-    () => computedEditColumns(columns, curCell, handleSetCurCell, form),
-    [columns, curCell],
-  );
-
-  const hasError: boolean =
-    curCell && form.getFieldError(`${curCell!.dataIndex}-${curCell!.rowIndex}`);
-
-  // tab键切换
-  useTabChange(curCell, handleSetCurCell, cacheSource, dataIndexMap);
-
-  // 每当 curCell 更变后，更改缓存的 dataSource 。 并且执行 onCellChange
+  // 每当 curCell 更新，取值更新 cacheSource 并触发 onCellChange
   useEffect(() => {
     if (beforeCell && beforeCell.current) {
       const { dataIndex, rowIndex } = beforeCell.current;
@@ -54,23 +44,21 @@ const useProps = <T extends object>(
     beforeCell.current = curCell;
   }, [curCell]);
 
-  function handleSetCurCell(nextCell: CellType) {
-    //  当前单元格有错误的话则禁止切换
-    if (!hasError) {
-      setCurCell(nextCell);
-    }
-  }
+  // 缓存处理过后的 editColumns 和 dataIndexMap。 只在 columns 和 curCell 更改后更新
+  // 如果要更改handleSetCurCell函数，注意此处的闭包和性能问题
+  const { editColumns, dataIndexMap } = useMemo(
+    () => computedEditColumns(columns, curCell, handleSetCurCell, form),
+    [columns, curCell],
+  );
 
+  // tab键切换
+  useTabChange(curCell, handleSetCurCell, cacheSource, dataIndexMap);
+
+  // 提供给外部使用的获取cacheSource的方法，绑定于tableRef上
   function getDataSource() {
     return new Promise(resolve => {
       if (curCell) {
-        const { dataIndex, rowIndex } = curCell;
-        form.validateFields([`${dataIndex}-${rowIndex}`], (err: object) => {
-          if (!err) {
-            handleSetCurCell(null);
-            resolve(cacheSource);
-          }
-        });
+          handleSetCurCell(null, () => resolve(cacheSource));
       } else {
         resolve(cacheSource);
       }
@@ -80,25 +68,54 @@ const useProps = <T extends object>(
   return {
     cacheSource,
     editColumns,
-    hasError,
-    isEdit: curCell !== null,
-    getDataSource
+    curCell,
+    getDataSource,
   };
 };
 
 const useDataSource = (dataSource: any[], form: any) => {
   const [cacheSource, setCacheSource] = useState(dataSource);
-
   // 外部 dataSource 更新了同步更新缓存的 dataSource 和 表单域的值
   useEffect(() => {
     setCacheSource(dataSource);
     form.resetFields();
   }, [dataSource]);
-
-  return {
-    cacheSource,
-    setCacheSource,
-  };
+  return { cacheSource, setCacheSource };
 };
 
+// Form.create的options，监听表单的改变
+const useCreateForm = () => {
+  // 缓存change时更改的表单域，避免检查整个表单从而减少循环次数
+  const [errs, setErrs] = useState({});
+  const [hasErr, setHasErr] = useState(false);
+  return {
+    hasErr,
+    onFieldsChange: (props, changedFields) => {
+      const fileds = Object.keys(changedFields)
+      if (fileds.length) {
+        let vldtEnd = false
+        // 取出errs缓存并隔离引用
+        let curErrs = { ...errs }
+        Object.keys(changedFields).forEach(key => {
+          const curFiled = changedFields[key]
+          // 有校验的表单域会触发两次change，validating标示为fasle（即校验结束）
+          if (!curFiled.validating) {
+            vldtEnd = true
+            if (curFiled.errors) curErrs[key] = curFiled.errors
+            else {
+              const { [key]: pass, ...resErrs } = curErrs as { [key:string]: any }
+              curErrs = resErrs
+            }
+          }
+        });
+        if (vldtEnd) {
+          setErrs(curErrs)
+          setHasErr(Object.keys(curErrs).length > 0)
+        }
+      }
+    },
+  };
+}
+
 export default useProps;
+export { useCreateForm };

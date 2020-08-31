@@ -23,13 +23,13 @@ yarn install
 ### Build
 
 ```sh
-yarn run Build
+yarn run build
 ```
 
 ### Build doc
 
 ```sh
-yarn run Build:doc
+yarn run build:doc
 ```
 
 ### Gen new component
@@ -49,11 +49,8 @@ yarn run test
 👤 **wyny-fe**
 
 
-
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
 
 Feel free to check [issues page](http://172.16.11.30:3001/front-end/metro/issues).
-
-![avatar](https://www.lgstatic.com/i/image3/M01/7A/03/CgpOIF54e2aAAjLyABDSN2erTbU523.png)

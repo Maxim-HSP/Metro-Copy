@@ -34,33 +34,18 @@ const Cell: FC<CellProps> = ({
   // 是否处于可编辑状态
   const isEditing: boolean =
     !!curCell && curCell.dataIndex === dataIndex && curCell.rowIndex === rowIndex;
-
-  // input的Ref，用于激活后的focus
+  // input Ref，用于激活后自动focus
   const inputRef = useFocus(isEditing);
 
-  // 将当前的Cell激活
-  function handleSetCurCell() {
-    if (curCell) {
-      form.validateFields([`${curCell.dataIndex}-${curCell.rowIndex}`], (err: object) => {
-        if (!err) onSetCurCell({ dataIndex, rowIndex });
-      });
-    } else {
-      onSetCurCell({ dataIndex, rowIndex });
-    }
-  }
-
-  // 保存值到表单域里
+  // 失焦、输入完成后，更新CurCell以触发hooks更新
   function handleSave() {
-    form.validateFields([`${dataIndex}-${rowIndex}`], (err: object) => {
-      if (!err) {
-        onSetCurCell(null);
-      }
-    });
+    onSetCurCell(null);
   }
 
-  // 静态值
+  // 非编辑状态 静态值
+  const handleActive = () => onSetCurCell({ dataIndex, rowIndex })
   const stockCell = (
-    <div onClick={handleSetCurCell} className="editable-cell-value-wrap">
+    <div onClick={handleActive} className="editable-cell-value-wrap">
       {Array.isArray(isSelect)
         ? (function() {
             const target = isSelect.find(({ value }) => value === initialValue);
@@ -70,7 +55,7 @@ const Cell: FC<CellProps> = ({
     </div>
   );
 
-  // 获取控件
+  // 匹配控件
   const getFormItem = () => {
     if (isSelect) {
       return (
@@ -88,6 +73,7 @@ const Cell: FC<CellProps> = ({
     }
   };
 
+  // 匹配校验
   const rulesWithCellInfo = rules.map(item => {
     const { validator } = item;
     return validator
@@ -114,13 +100,10 @@ const Cell: FC<CellProps> = ({
 
 const useFocus = (isEditing: boolean) => {
   const inputRef: RefObject<any> = React.createRef();
-
   useEffect(() => {
-    if (isEditing) {
-      if (inputRef.current) inputRef.current.focus();
-    }
+    // 被激活时自动focus
+    if (isEditing && inputRef.current) inputRef.current.focus();
   }, [isEditing]);
-
   return inputRef;
 };
 
